@@ -81,10 +81,7 @@ static void displayQRCode(const char *url) {
   // user can still type the code in manually, or he can copy the URL into
   // his browser.
   if (isatty(1)) {
-    void *qrencode = dlopen("libqrencode.so.2", RTLD_NOW | RTLD_LOCAL);
-    if (!qrencode) {
-      qrencode = dlopen("libqrencode.so.3", RTLD_NOW | RTLD_LOCAL);
-    }
+    void *qrencode = dlopen("libqrencode.so", RTLD_NOW | RTLD_LOCAL);
     if (!qrencode) {
       qrencode = dlopen("libqrencode.dylib.3", RTLD_NOW | RTLD_LOCAL);
     }
@@ -194,11 +191,11 @@ int main(int argc, char *argv[]) {
 		printf("bad arg\n");
 		return -1;
 	}
-	const char *url = urlEncode(argv[1]);
-	if(url)
+	const char *text = urlEncode(argv[1]);
+	if(text)
 	{
- 		displayQRCode(url);
-		free((void *)url);
+ 		displayQRCode(text);
+		free((void *)text);
 	}
   return 0;
 }
